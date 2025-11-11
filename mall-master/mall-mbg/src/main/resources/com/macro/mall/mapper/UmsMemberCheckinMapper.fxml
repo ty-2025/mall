@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.mapper.UmsMemberCheckinMapper">
+
+    <resultMap id="BaseResultMap" type="com.macro.mall.model.UmsMemberCheckin">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="member_id" jdbcType="BIGINT" property="memberId" />
+        <result column="checkin_date" jdbcType="DATE" property="checkinDate" />
+        <result column="integration" jdbcType="INTEGER" property="integration" />
+        <result column="continuous_days" jdbcType="INTEGER" property="continuousDays" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, member_id, checkin_date, integration, continuous_days, create_time
+    </sql>
+
+    <insert id="insert" parameterType="com.macro.mall.model.UmsMemberCheckin">
+        insert into ums_member_checkin (member_id, checkin_date, integration, continuous_days)
+        values (#{memberId,jdbcType=BIGINT}, #{checkinDate,jdbcType=DATE},
+        #{integration,jdbcType=INTEGER}, #{continuousDays,jdbcType=INTEGER})
+    </insert>
+
+    <select id="selectByMemberIdAndDateRange" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from ums_member_checkin
+        where member_id = #{memberId}
+        and checkin_date between #{startDate} and #{endDate}
+        order by checkin_date desc
+    </select>
+
+    <select id="selectLatestCheckin" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from ums_member_checkin
+        where member_id = #{memberId}
+        order by checkin_date desc
+        limit 1
+    </select>
+
+    <select id="selectByMemberIdAndDate" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from ums_member_checkin
+        where member_id = #{memberId} and checkin_date = #{checkinDate}
+    </select>
+
+    <select id="countByMemberId" resultType="java.lang.Integer">
+        select count(*) from ums_member_checkin where member_id = #{memberId}
+    </select>
+</mapper>
