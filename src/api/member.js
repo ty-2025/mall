@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 
-export function fetchMemberList(params) {
+// 会员相关API
+export function fetchList(params) {
   return request({
     url: '/member/list',
     method: 'get',
@@ -8,47 +9,40 @@ export function fetchMemberList(params) {
   })
 }
 
-export function fetchMemberDetail(id) {
+export function getMemberDetail(id) {
   return request({
     url: `/member/${id}`,
     method: 'get'
   })
 }
 
-export function fetchMemberIntegration(memberId) {
+export function createMember(data) {
   return request({
-    url: `/member/${memberId}/integration`,
-    method: 'get'
-  })
-}
-
-export function fetchMemberLevelList(params) {
-  return request({
-    url: '/member/level/list',
-    method: 'get',
-    params: params
-  })
-}
-
-export function createMemberLevel(data) {
-  return request({
-    url: '/member/level/create',
+    url: '/member/create',
     method: 'post',
     data: data
   })
 }
 
-export function updateMemberLevel(data) {
+export function updateMember(data) {
   return request({
-    url: '/member/level/update',
+    url: `/member/update/${data.id}`,
     method: 'post',
     data: data
   })
 }
 
-export function deleteMemberLevel(id) {
+export function deleteMember(id) {
   return request({
-    url: `/member/level/delete/${id}`,
+    url: `/member/delete/${id}`,
     method: 'post'
+  })
+}
+
+export function updateMemberStatus(id, status) {
+  return request({
+    url: `/member/updateStatus/${id}`,
+    method: 'post',
+    params: { status: status }
   })
 }

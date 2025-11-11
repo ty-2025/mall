@@ -1,3 +1,4 @@
+
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -10,8 +11,8 @@ import Layout from '../views/layout/Layout'
  * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
  * alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
  *                                if not set alwaysShow, only more than one route under the children
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb
+ *                                it will become nested mode, otherwise not show the root menu
+ * redirect: redirects           if `redirect:redirects` will not redirect in the breadcrumb
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
     title: 'title'               the name show in submenu and breadcrumb (recommend set)
@@ -30,20 +31,31 @@ export const constantRouterMap = [
       path: 'home',
       name: 'home',
       component: () => import('@/views/home/index'),
-      meta: {title: '仪表盘', icon: 'dashboard'}
+      meta: {title: '首页', icon: 'dashboard'}
+    }]
+  },
+// 会员菜单放在常量路由中（始终显示）
+{
+  path: '/umb',
+    component: Layout,
+  redirect: '/umb/member',
+  name: 'umb',
+  meta: {title: '会员', icon: 'user'},
+  children: [
+    {
+      path: 'member',
+      name: 'member',
+      component: () => import('@/views/umb/member/index'),
+      meta: {title: '会员列表', icon: 'user'}
     },
-      {
-        name: 'document',
-        path: 'https://www.macrozheng.com',
-        meta: {title: '学习教程', icon: 'document'}
-      },
-      {
-        name: 'video',
-        path: 'https://www.macrozheng.com/mall/foreword/mall_video.html',
-        meta: {title: '视频教程', icon: 'video'}
-      },
-    ]
-  }
+    {
+      path: 'level',
+      name: 'level',
+      component: () => import('@/views/umb/level/index'),
+      meta: {title: '会员等级', icon: 'medal'}
+    }
+  ]
+}
 ]
 
 export const asyncRouterMap = [
@@ -370,28 +382,7 @@ export const asyncRouterMap = [
       }
     ]
   },
-  // 添加独立的会员菜单 - 放在权限之后，最下面
-  {
-    path: '/umb',
-    component: Layout,
-    redirect: '/umb/mls',
-    name: 'umb',
-    meta: {title: '会员', icon: 'ums'},
-    children: [
-      {
-        path: 'mls',
-        name: 'mls',
-        component: () => import('@/views/ums/member/index'),
-        meta: {title: '会员列表', icon: 'ums-admin'}
-      },
-      {
-        path: 'mle',
-        name: 'mle',
-        component: () => import('@/views/ums/memberLevel/index'),
-        meta: {title: '会员等级', icon: 'ums-role'}
-      }
-    ]
-  },
+
   {path: '*', redirect: '/404', hidden: true}
 ]
 
