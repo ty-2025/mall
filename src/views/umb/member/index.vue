@@ -53,6 +53,12 @@
         <el-table-column label="操作" width="200" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="text" @click="handleUpdate(scope.$index, scope.row)">编辑</el-button>
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-view"
+              @click="handleIntegrationHistory(scope.row)"
+            >积分记录</el-button>
             <el-button size="mini" type="text" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -315,6 +321,14 @@ export default {
     handleCurrentChange(val) {
       this.listQuery.pageNum = val;
       this.getList();
+    },
+
+    // 查看积分记录
+    handleIntegrationHistory(row) {
+      this.$router.push({
+        path: '/member/integrationHistory',
+        query: { memberId: row.id, username: row.username }
+      });
     },
 
     // 删除会员

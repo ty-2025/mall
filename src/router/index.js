@@ -53,6 +53,12 @@ export const constantRouterMap = [
       name: 'level',
       component: () => import('@/views/umb/level/index'),
       meta: {title: '会员等级', icon: 'medal'}
+    },
+    {
+      path: 'integrationHistory',
+      name: 'IntegrationHistory',
+      component: () => import('@/views/umb/member/integrationHistory'),
+      meta: { title: '积分记录', icon: 'chart' }
     }
   ]
 }
